@@ -1,8 +1,38 @@
-<body>
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
+---
+import BlogPost, { type BlogProps } from "../components/blog-post.astro";
+import BaseLayout from "../layouts/base-layout.astro";
+import "../styles/global.css";
+const allPosts = Object.values(
+  import.meta.glob("../pages/posts/*md", { eager: true })
+);
+const pageTitle = "My Astro Learning Blog";
 
-  <h1>My Astro Learning Blog</h1>
+const formatDate = (date: string) => {
+  const nd = new Date(date);
+  return new Intl.DateTimeFormat("en-GB").format(nd);
+};
+---
+
+<BaseLayout pageTitle={pageTitle}>
   <p>This is where I will post about my journey learning Astro.</p>
-</body>
+  <ul>
+    {
+      allPosts.map(({ frontmatter, url }: any) => {
+        return (
+          <BlogPost
+            title={frontmatter.title}
+            url={url}
+            pubDate={formatDate(frontmatter.pubDate)}
+          />
+        );
+      })
+    }
+  </ul>
+</BaseLayout>
+
+<script>
+  const allPosts = Object.values(
+    import.meta.glob("../pages/posts/*md", { eager: true })
+  );
+  console.log(allPosts[0]);
+</script>

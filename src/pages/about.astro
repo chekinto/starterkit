@@ -1,18 +1,29 @@
-<body>
-  <a href="/">Home</a>
-  <a href="/about/">About</a>
-  <a href="/blog/">Blog</a>
+---
+import Footer from "../components/footer.astro";
+import Header from "../components/header.astro";
+import BaseLayout from "../layouts/base-layout.astro";
+import "../styles/global.css";
+const pageTitle = "About Me";
 
-  <h1>About Me</h1>
-  <h2>... and my new Astro site!</h2>
+const me = {
+  firstName: "Che",
+  country: "United Kingdom",
+  occupation: "Software Engineer",
+  hobbies: ["golf", "football", "padel"],
+};
 
-  <p>
-    I am working through Astro's introductory tutorial. This is the second page
-    on my website, and it's the first one I built myself!
-  </p>
+const skills = ["HTML", "CSS", "Javascript", "Astro"];
+---
 
-  <p>
-    This site will update as I complete more of the tutorial, so keep checking
-    back and see how my journey is going!
-  </p>
-</body>
+<BaseLayout pageTitle={pageTitle}>
+  <p>Here are a few facts about me</p>
+  <ul>
+    <li>My name is {me.firstName}</li>
+    <li>I live in {me.country}</li>
+    {me.hobbies.map((hobby) => <li>{hobby}</li>)}
+  </ul>
+
+  <ul>
+    {skills.map((skill) => <li class="skill">{skill}</li>)}
+  </ul>
+</BaseLayout>
